@@ -1,0 +1,36 @@
+/* src/styles/public-shared.css */
+.page-loading {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+}
+
+.page-error {
+  padding: var(--space-8);
+  text-align: center;
+  font-family: var(--font-body);
+}
+
+.page-error p[role='alert'] {
+  color: var(--color-destructive);
+  margin-bottom: var(--space-4);
+}
+
+.retry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background: #be185d;
+}
