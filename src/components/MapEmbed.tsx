@@ -1,4 +1,6 @@
 // src/components/MapEmbed.tsx
+import './MapEmbed.css'
+
 export function MapEmbed({ mapEmbedUrl }: { mapEmbedUrl: string | null }) {
   if (!mapEmbedUrl) return null
 
