@@ -52,5 +52,5 @@ export function useGuestSearch() {
       .map(({ item }) => ({ id: item.id, full_name: item.full_name, salutation: item.salutation }))
   }
 
-  return { search, loading, error }
+  return { search, loading, error, reload: load }
 }

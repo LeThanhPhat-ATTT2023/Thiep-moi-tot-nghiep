@@ -56,4 +56,46 @@ describe('NameSearchBox', () => {
       screen.getByText('Không tìm thấy tên, vui lòng kiểm tra lại chính tả.')
     ).toBeInTheDocument()
   })
+
+  it('does not show a not-found message while the guest list is still loading', async () => {
+    mockedUseGuestSearch.mockReturnValue({ search: () => [], loading: true, error: false })
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <NameSearchBox />
+      </MemoryRouter>
+    )
+
+    await user.type(screen.getByPlaceholderText('Nhập tên của bạn...'), 'Trần')
+
+    expect(
+      screen.queryByText('Không tìm thấy tên, vui lòng kiểm tra lại chính tả.')
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows an error message with a retry button when the guest list fails to load', async () => {
+    const reloadMock = vi.fn()
+    mockedUseGuestSearch.mockReturnValue({
+      search: () => [],
+      loading: false,
+      error: true,
+      reload: reloadMock,
+    })
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <NameSearchBox />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText('Không tải được danh sách khách mời.')).toBeInTheDocument()
+    expect(
+      screen.queryByText('Không tìm thấy tên, vui lòng kiểm tra lại chính tả.')
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Thử lại' }))
+    expect(reloadMock).toHaveBeenCalledTimes(1)
+  })
 })

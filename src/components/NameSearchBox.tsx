@@ -5,12 +5,12 @@ import { useGuestSearch } from '../hooks/useGuestSearch'
 import './NameSearchBox.css'
 
 export function NameSearchBox() {
-  const { search } = useGuestSearch()
+  const { search, loading, error, reload } = useGuestSearch()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
 
-  const results = search(query)
-  const showEmptyMessage = query.trim().length > 0 && results.length === 0
+  const results = loading || error ? [] : search(query)
+  const showEmptyMessage = !loading && !error && query.trim().length > 0 && results.length === 0
 
   return (
     <div className="name-search-box">
@@ -21,6 +21,14 @@ export function NameSearchBox() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      {error && (
+        <p className="name-search-error" role="alert">
+          Không tải được danh sách khách mời.{' '}
+          <button type="button" onClick={reload}>
+            Thử lại
+          </button>
+        </p>
+      )}
       {results.length > 0 && (
         <ul className="name-search-results">
           {results.map((guest) => (

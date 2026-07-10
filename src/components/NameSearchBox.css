@@ -56,3 +56,19 @@
   font-size: 0.85rem;
   color: var(--color-foreground);
 }
+
+.name-search-error {
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-destructive);
+}
+
+.name-search-error button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
