@@ -11,8 +11,7 @@ export function GalleryGrid({ photos }: { photos: GalleryPhoto[] }) {
         <img
           key={photo.id}
           src={photo.image_url}
-          alt={photo.caption ?? ''}
-          role="img"
+          alt={photo.caption ?? 'Ảnh trong bộ sưu tập'}
           loading="lazy"
         />
       ))}
