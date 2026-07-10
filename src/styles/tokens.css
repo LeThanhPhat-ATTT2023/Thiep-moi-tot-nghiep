@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --color-primary: #db2777;
+  --color-on-primary: #ffffff;
+  --color-secondary: #f472b6;
+  --color-accent: #a16207;
+  --color-background: #fdf2f8;
+  --color-foreground: #831843;
+  --color-muted: #f0edf4;
+  --color-border: #fbcfe8;
+  --color-destructive: #dc2626;
+  --color-ring: #db2777;
+
+  --font-display: 'Cormorant Infant', 'Georgia', serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}

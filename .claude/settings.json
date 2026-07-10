@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"tsc exit code: $?\")",
+      "Bash(npx eslint *)",
+      "Bash(echo \"exit: $?\")"
+    ]
+  }
+}

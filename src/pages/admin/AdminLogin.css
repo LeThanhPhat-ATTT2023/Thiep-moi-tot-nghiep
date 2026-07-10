@@ -1,0 +1,94 @@
+.admin-login-page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: radial-gradient(circle at top, var(--color-secondary) 0%, var(--color-background) 60%);
+  font-family: var(--font-body);
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 380px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  box-shadow: 0 20px 40px -20px rgba(219, 39, 119, 0.35);
+}
+
+.admin-login-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  text-align: center;
+  margin: 0 0 var(--space-6);
+}
+
+.admin-login-field {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-foreground);
+  margin-bottom: var(--space-4);
+}
+
+.admin-login-field input {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: 0.65rem 0.9rem;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--color-foreground);
+  background: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.admin-login-field input:focus-visible {
+  outline: none;
+  border-color: var(--color-ring);
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.25);
+}
+
+.admin-login-error {
+  background: #fef2f2;
+  color: var(--color-destructive);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.875rem;
+  margin: 0 0 var(--space-4);
+}
+
+.admin-login-submit {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 200ms ease, transform 150ms ease;
+}
+
+.admin-login-submit:hover:not(:disabled) {
+  background: #be185d;
+}
+
+.admin-login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-login-submit:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.35);
+}
