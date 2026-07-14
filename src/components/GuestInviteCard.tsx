@@ -9,7 +9,7 @@ export interface GuestInviteCardProps {
   eventSettings: EventSettings | null
   submitting: boolean
   rsvpError: string | null
-  onRespond: (status: 'attending' | 'not_attending') => void
+  onRespond: (status: 'attending' | 'not_attending' | 'maybe') => void
 }
 
 export function GuestInviteCard({ guest, submitting, rsvpError, onRespond }: GuestInviteCardProps) {

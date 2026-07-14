@@ -63,7 +63,7 @@ export function EnvelopeModal({ guestId, eventSettings, onClose }: EnvelopeModal
     if (e.target === overlayRef.current) onClose()
   }
 
-  async function handleRsvpRespond(status: 'attending' | 'not_attending') {
+  async function handleRsvpRespond(status: 'attending' | 'not_attending' | 'maybe') {
     await respond(status)
     // After successful RSVP, show message modal
     if (!rsvpError) {

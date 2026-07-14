@@ -15,7 +15,7 @@ export interface UseGuestInviteResult {
   notFound: boolean
   submitting: boolean
   rsvpError: string | null
-  respond: (status: 'attending' | 'not_attending') => void
+  respond: (status: 'attending' | 'not_attending' | 'maybe') => void
 }
 
 export function useGuestInvite({ guestId, eventSettings: externalSettings }: UseGuestInviteOptions): UseGuestInviteResult {
@@ -60,7 +60,7 @@ export function useGuestInvite({ guestId, eventSettings: externalSettings }: Use
     setLoading(false)
   }
 
-  async function respond(status: 'attending' | 'not_attending') {
+  async function respond(status: 'attending' | 'not_attending' | 'maybe') {
     if (!guest) return
     const previous = guest
     setSubmitting(true)

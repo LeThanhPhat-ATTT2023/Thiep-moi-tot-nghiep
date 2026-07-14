@@ -1,5 +1,5 @@
 ﻿// src/types/database.ts
-export type RsvpStatus = 'pending' | 'attending' | 'not_attending'
+export type RsvpStatus = 'pending' | 'attending' | 'not_attending' | 'maybe'
 
 export interface Guest {
   id: string
