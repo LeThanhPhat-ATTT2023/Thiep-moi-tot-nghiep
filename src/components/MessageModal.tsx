@@ -7,9 +7,10 @@ export interface MessageModalProps {
   guestName: string
   onSubmit: (message: string) => Promise<void>
   onSkip: () => void
+  error?: string | null
 }
 
-export function MessageModal({ guestName, onSubmit, onSkip }: MessageModalProps) {
+export function MessageModal({ guestName, onSubmit, onSkip, error }: MessageModalProps) {
   const [message, setMessage] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -48,6 +49,8 @@ export function MessageModal({ guestName, onSubmit, onSkip }: MessageModalProps)
           <div className="message-modal-char-count">
             {message.length}/500
           </div>
+
+          {error && <p className="message-modal-error">{error}</p>}
 
           <div className="message-modal-actions">
             <button

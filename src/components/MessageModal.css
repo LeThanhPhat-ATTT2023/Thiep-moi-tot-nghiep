@@ -63,6 +63,13 @@
   margin-top: var(--space-1);
 }
 
+.message-modal-error {
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-destructive);
+  text-align: center;
+}
+
 .message-modal-actions {
   display: flex;
   gap: var(--space-3);

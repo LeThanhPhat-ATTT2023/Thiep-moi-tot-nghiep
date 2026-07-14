@@ -29,6 +29,7 @@ export function EnvelopeModal({ guestId, eventSettings, onClose }: EnvelopeModal
     reducedMotion ? 'revealed' : 'envelope'
   )
   const [viewState, setViewState] = useState<ViewState>('card')
+  const [messageError, setMessageError] = useState<string | null>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const envelopeRef = useRef<HTMLButtonElement>(null)
 
@@ -72,16 +73,20 @@ export function EnvelopeModal({ guestId, eventSettings, onClose }: EnvelopeModal
 
   async function handleMessageSubmit(message: string) {
     if (!guest) return
-    const { error } = await supabase
-      .from('guests')
-      .update({ message_by_guest: message })
-      .eq('id', guest.id)
+    setMessageError(null)
+    const { error } = await supabase.rpc('submit_guest_message', {
+      guest_id: guest.id,
+      msg: message,
+    })
 
-    if (!error) {
-      setViewState('complete')
-      // Auto close after 2 seconds
-      setTimeout(() => onClose(), 10000)
+    if (error) {
+      setMessageError('Gửi lời nhắn thất bại, vui lòng thử lại.')
+      return
     }
+
+    setViewState('complete')
+    // Auto close after 2 seconds
+    setTimeout(() => onClose(), 10000)
   }
 
   function handleMessageSkip() {
@@ -218,6 +223,7 @@ export function EnvelopeModal({ guestId, eventSettings, onClose }: EnvelopeModal
               guestName={guest.full_name}
               onSubmit={handleMessageSubmit}
               onSkip={handleMessageSkip}
+              error={messageError}
             />
           )}
           {viewState === 'complete' && (
