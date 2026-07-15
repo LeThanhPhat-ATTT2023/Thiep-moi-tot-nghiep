@@ -1,0 +1,50 @@
+/* src/components/PublicEnvelopeModal.css */
+.public-envelope-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-6);
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px -16px rgba(146, 46, 92, 0.4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.public-envelope-cap {
+  width: 32px;
+  height: 32px;
+  color: #a13d6d;
+}
+
+.public-envelope-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--color-foreground);
+}
+
+.public-envelope-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-foreground);
+  white-space: pre-line;
+}
+
+.public-envelope-close-button {
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.public-envelope-close-button:hover {
+  background: #be185d;
+}
