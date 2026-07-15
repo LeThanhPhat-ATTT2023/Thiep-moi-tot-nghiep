@@ -21,6 +21,7 @@ export interface EventSettings {
   venue_address: string | null
   map_embed_url: string | null
   cover_image_url: string | null
+  public_invite_message: string | null
 }
 
 export interface GalleryPhoto {

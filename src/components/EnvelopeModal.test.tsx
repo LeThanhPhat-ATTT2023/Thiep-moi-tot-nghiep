@@ -35,6 +35,7 @@ const eventSettings = {
   venue_address: '123 Đường ABC',
   map_embed_url: '',
   cover_image_url: null,
+  public_invite_message: null,
 }
 
 function mockGuestSuccess() {
