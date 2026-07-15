@@ -1,5 +1,5 @@
 // src/pages/SharedInvite.test.tsx
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { MotionGlobalConfig } from 'motion/react'
@@ -36,38 +36,48 @@ function mockLoadSuccess() {
   return fromMock
 }
 
+async function enterPin(user: ReturnType<typeof userEvent.setup>, digits: string) {
+  for (const digit of digits) {
+    await user.click(screen.getByRole('button', { name: digit }))
+  }
+}
+
 describe('SharedInvite', () => {
   beforeEach(() => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
   })
 
-  it('shows the password gate by default', () => {
+  it('shows the password gate keypad by default', () => {
     mockLoadSuccess()
     render(<SharedInvite />)
 
-    expect(screen.getByPlaceholderText('Nhập mật khẩu...')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
     expect(screen.queryByText('Lễ tốt nghiệp')).not.toBeInTheDocument()
   })
 
-  it('shows an error and stays on the gate when the password is wrong', async () => {
+  it('shows an error, clears the pin after a wrong attempt, and unlocks on a correct retry', async () => {
     mockLoadSuccess()
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     render(<SharedInvite />)
 
-    await user.type(screen.getByPlaceholderText('Nhập mật khẩu...'), '0000')
-    await user.click(screen.getByRole('button', { name: 'Mở thiệp' }))
-
+    await enterPin(user, '0000')
     expect(await screen.findByText('Sai mật khẩu, vui lòng thử lại.')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Nhập mật khẩu...')).toBeInTheDocument()
+
+    await vi.advanceTimersByTimeAsync(600)
+    await waitFor(() =>
+      expect(screen.queryByText('Sai mật khẩu, vui lòng thử lại.')).not.toBeInTheDocument()
+    )
+
+    await enterPin(user, '2307')
+    expect(await screen.findByText('Lễ tốt nghiệp')).toBeInTheDocument()
   })
 
-  it('unlocks the shared invite when the correct password is entered', async () => {
+  it('unlocks the shared invite when the correct 4 digits are entered', async () => {
     mockLoadSuccess()
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     render(<SharedInvite />)
 
-    await user.type(screen.getByPlaceholderText('Nhập mật khẩu...'), '2307')
-    await user.click(screen.getByRole('button', { name: 'Mở thiệp' }))
+    await enterPin(user, '2307')
 
     expect(await screen.findByText('Lễ tốt nghiệp')).toBeInTheDocument()
     expect(
@@ -75,13 +85,22 @@ describe('SharedInvite', () => {
     ).toBeInTheDocument()
   })
 
+  it('unlocks when the correct digits are typed on a physical keyboard', async () => {
+    mockLoadSuccess()
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+    render(<SharedInvite />)
+
+    await user.keyboard('2307')
+
+    expect(await screen.findByText('Lễ tốt nghiệp')).toBeInTheDocument()
+  })
+
   it('opens the generic PublicEnvelopeModal from the CTA and shows the real fetched message', async () => {
     mockLoadSuccess()
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     render(<SharedInvite />)
 
-    await user.type(screen.getByPlaceholderText('Nhập mật khẩu...'), '2307')
-    await user.click(screen.getByRole('button', { name: 'Mở thiệp' }))
+    await enterPin(user, '2307')
     await user.click(
       await screen.findByRole('button', { name: 'Xem lời mời riêng dành cho bạn' })
     )
@@ -103,6 +122,6 @@ describe('SharedInvite', () => {
 
     render(<SharedInvite />)
 
-    expect(screen.getByPlaceholderText('Nhập mật khẩu...')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
   })
 })

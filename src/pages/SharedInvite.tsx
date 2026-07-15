@@ -1,9 +1,10 @@
 // src/pages/SharedInvite.tsx
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import { AnimatePresence } from 'motion/react'
 import { useEventInfo } from '../hooks/useEventInfo'
 import { EventInfoSections } from '../components/EventInfoSections'
 import { PublicEnvelopeModal } from '../components/PublicEnvelopeModal'
+import { PinKeypad } from '../components/PinKeypad'
 import { InviteFrame } from '../components/InviteFrame'
 import { MusicPlayerWidget } from '../components/MusicPlayerWidget'
 import { SparkleIcon } from '../components/icons'
@@ -15,22 +16,30 @@ import './HomePage.css'
 import './SharedInvite.css'
 
 const SHARED_INVITE_PASSWORD = '2307'
+const PIN_ERROR_RESET_MS = 600
 
 type GateState = 'gate' | 'unlocked'
 
 export function SharedInvite() {
   const [gateState, setGateState] = useState<GateState>('gate')
-  const [password, setPassword] = useState('')
-  const [gateError, setGateError] = useState(false)
+  const [pin, setPin] = useState('')
+  const [pinError, setPinError] = useState(false)
   const [inviteOpen, setInviteOpen] = useState(false)
   const { settings, gallery, loading, error, reload } = useEventInfo()
 
-  function handleGateSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (password.trim() === SHARED_INVITE_PASSWORD) {
-      setGateState('unlocked')
-    } else {
-      setGateError(true)
+  function handlePinChange(next: string) {
+    setPin(next)
+    setPinError(false)
+    if (next.length === 4) {
+      if (next === SHARED_INVITE_PASSWORD) {
+        setGateState('unlocked')
+      } else {
+        setPinError(true)
+        setTimeout(() => {
+          setPin('')
+          setPinError(false)
+        }, PIN_ERROR_RESET_MS)
+      }
     }
   }
 
@@ -54,30 +63,15 @@ export function SharedInvite() {
             <MusicPlayerWidget />
           </div>
 
-          <form className="home-search-section" onSubmit={handleGateSubmit}>
+          <div className="home-search-section">
             <p className="home-search-label">Vui lòng nhập mật khẩu❤️</p>
-            <div className="shared-invite-gate-box">
-              <input
-                className="shared-invite-gate-input"
-                type="text"
-                inputMode="numeric"
-                placeholder="Nhập mật khẩu..."
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                  setGateError(false)
-                }}
-              />
-              <button type="submit" className="shared-invite-gate-button">
-                Mở thiệp
-              </button>
-            </div>
-            {gateError && (
+            <PinKeypad value={pin} maxLength={4} onChange={handlePinChange} shake={pinError} />
+            {pinError && (
               <p className="shared-invite-gate-error" role="alert">
                 Sai mật khẩu, vui lòng thử lại.
               </p>
             )}
-          </form>
+          </div>
         </InviteFrame>
       </div>
     )

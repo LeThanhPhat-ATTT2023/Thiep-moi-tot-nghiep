@@ -1,0 +1,97 @@
+/* src/components/PinKeypad.css */
+.pin-keypad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.pin-keypad-dots {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.pin-keypad-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: transparent;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.pin-keypad-dot-filled {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.pin-keypad-dots-shake {
+  animation: pin-shake 400ms ease;
+}
+
+.pin-keypad-dots-shake .pin-keypad-dot-filled {
+  background: var(--color-destructive);
+  border-color: var(--color-destructive);
+}
+
+@keyframes pin-shake {
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+}
+
+.pin-keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.pin-keypad-key {
+  width: 60px;
+  height: 60px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-muted);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-keypad-key:hover {
+  background: var(--color-border);
+}
+
+.pin-keypad-key-spacer {
+  background: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-keypad-dots-shake {
+    animation: none;
+  }
+}

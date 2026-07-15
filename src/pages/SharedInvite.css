@@ -1,45 +1,4 @@
 /* src/pages/SharedInvite.css */
-.shared-invite-gate-box {
-  display: flex;
-  gap: var(--space-2);
-  max-width: 360px;
-  margin: 0 auto;
-}
-
-.shared-invite-gate-input {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  font-family: var(--font-body);
-  color: var(--color-foreground);
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-sizing: border-box;
-}
-
-.shared-invite-gate-input:focus-visible {
-  outline: none;
-  border-color: var(--color-ring);
-  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.25);
-}
-
-.shared-invite-gate-button {
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-on-primary);
-  background: var(--color-primary);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.shared-invite-gate-button:hover {
-  background: #be185d;
-}
-
 .shared-invite-gate-error {
   margin: var(--space-2) 0 0;
   font-size: 0.85rem;
