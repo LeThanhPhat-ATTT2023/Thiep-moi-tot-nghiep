@@ -82,4 +82,14 @@ describe('PublicEnvelopeModal', () => {
 
     expect(onClose).toHaveBeenCalled()
   })
+
+  it('closes when clicking the backdrop', async () => {
+    const onClose = vi.fn()
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+    renderModal(undefined, onClose)
+
+    await user.click(screen.getByRole('dialog'))
+
+    expect(onClose).toHaveBeenCalled()
+  })
 })
