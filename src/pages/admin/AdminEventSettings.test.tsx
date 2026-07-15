@@ -156,4 +156,33 @@ describe('AdminEventSettings', () => {
       await screen.findByText('Không nhận diện được link YouTube này.')
     ).toBeInTheDocument()
   })
+
+  it('loads and saves the public invite message', async () => {
+    const fromMock = supabase.from as unknown as ReturnType<typeof vi.fn>
+    const settingsBuilder = createQueryBuilderMock({
+      data: { ...eventSettings, public_invite_message: 'Lời mời cũ' },
+      error: null,
+    })
+    fromMock.mockImplementation((table: string) => {
+      if (table === 'event_settings') {
+        return settingsBuilder
+      }
+      return createQueryBuilderMock({ data: [], error: null })
+    })
+    const user = userEvent.setup()
+
+    renderComponent()
+    await screen.findByDisplayValue('Lời mời cũ')
+
+    const textarea = screen.getByLabelText('Lời mời chung (đăng mạng xã hội)')
+    await user.clear(textarea)
+    await user.type(textarea, 'Lời mời mới')
+    await user.click(screen.getByRole('button', { name: 'Lưu thông tin sự kiện' }))
+
+    await waitFor(() =>
+      expect(settingsBuilder.update as ReturnType<typeof vi.fn>).toHaveBeenCalledWith(
+        expect.objectContaining({ public_invite_message: 'Lời mời mới' })
+      )
+    )
+  })
 })

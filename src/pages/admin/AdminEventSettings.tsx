@@ -88,6 +88,7 @@ export function AdminEventSettings() {
         venue_address: settings.venue_address,
         map_embed_url: settings.map_embed_url,
         cover_image_url: settings.cover_image_url,
+        public_invite_message: settings.public_invite_message,
       })
       .eq('id', 1)
 
@@ -232,6 +233,14 @@ export function AdminEventSettings() {
             height={120}
           />
         )}
+        <label className="admin-field">
+          Lời mời chung (đăng mạng xã hội)
+          <textarea
+            value={settings.public_invite_message ?? ''}
+            onChange={(e) => updateField('public_invite_message', e.target.value)}
+            rows={5}
+          />
+        </label>
         {error && (
           <p className="admin-error-banner" role="alert">
             {error}
